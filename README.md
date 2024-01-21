@@ -1,1 +1,3 @@
 # InHouseApp
+
+- Add dependencies
