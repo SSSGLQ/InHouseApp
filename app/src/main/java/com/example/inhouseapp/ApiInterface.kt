@@ -9,10 +9,10 @@ import retrofit2.http.Query
 
 interface ApiInterface {
     @Headers("Content-Type: application/json")
-    @POST("login")
+    @POST("api/login")
     fun login(@Query("delay") query: Int, @Body request: LoginRequest): Call<LoginResponse>
 
     @Headers("Content-Type: application/json")
-    @GET("users")
+    @GET("api/users")
     fun getStaffList(@Query("page") query: Int): Call<StaffPageData>
 }

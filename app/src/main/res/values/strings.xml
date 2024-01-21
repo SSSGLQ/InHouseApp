@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">InHouseApp</string>
+    <string name="email">Email</string>
+    <string name="password_hint">Password. Letter and number only, 6-10 characters</string>
+    <string name="login">Login</string>
+    <string name="invalid_error">Invalid email or password</string>
+    <string name="login_fail">Login failure. Please retry</string>
 </resources>
