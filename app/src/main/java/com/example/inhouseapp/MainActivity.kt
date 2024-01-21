@@ -1,5 +1,6 @@
 package com.example.inhouseapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -49,8 +50,7 @@ class MainActivity : AppCompatActivity() {
                                 progress.visibility = View.GONE
                                 val token = tokenResponse.token
                                 // process the token, jump to staff list page
-                                error.text = token
-                                error.visibility = View.VISIBLE
+                                navigateToStaffPage(token)
                             } else {
                                 val errorMessage = tokenResponse?.error ?: "Unknown error"
                                 // display error message
@@ -90,11 +90,18 @@ class MainActivity : AppCompatActivity() {
     private fun setButtonEnabled(enabled: Boolean) {
         loginButton.isEnabled = enabled
         if (enabled) {
-            // 恢复按钮颜色
+            // recover color of button
             loginButton.alpha = 1.0f
         } else {
-            // 设置按钮置灰
+            // set color of button to gray
             loginButton.alpha = 0.5f
         }
+    }
+
+    private fun navigateToStaffPage(token: String) {
+        val intent = Intent(this, StaffListActivity::class.java)
+        intent.putExtra("TOKEN", token)
+        startActivity(intent)
+        finish()
     }
 }
