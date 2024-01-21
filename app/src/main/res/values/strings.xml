@@ -11,4 +11,5 @@
     <string name="example_email">example@example.com</string>
     <string name="example_first_name">John</string>
     <string name="example_last_name">Doe</string>
+    <string name="name">Name: </string>
 </resources>

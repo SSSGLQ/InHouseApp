@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -47,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                             // if the API call is a success then these operations are executed
                             val tokenResponse = response.body()
                             if (tokenResponse?.token != null) {
-                                progress.visibility = View.GONE
                                 val token = tokenResponse.token
                                 // process the token, jump to staff list page
                                 navigateToStaffPage(token)
@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                             error.text = getString(R.string.login_fail)
                             error.visibility = View.VISIBLE
                         }
+                        progress.visibility = View.GONE
                         setButtonEnabled(true)
                     }
 
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG, "onFailure: " + t.message)
                         error.text = getString(R.string.login_fail)
                         error.visibility = View.VISIBLE
+                        progress.visibility = View.GONE
                         setButtonEnabled(true)
                     }
                 })
@@ -84,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun isValid(email: String, password: String): Boolean {
         // if the email and password are both valid
-        return email.isNotEmpty() && password.isNotEmpty()
+        return email.isNotEmpty() && password.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     private fun setButtonEnabled(enabled: Boolean) {
