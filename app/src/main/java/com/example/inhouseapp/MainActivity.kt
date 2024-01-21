@@ -1,7 +1,6 @@
 package com.example.inhouseapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -10,11 +9,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class MainActivity : AppCompatActivity() {
     val TAG = "MainActivity"
@@ -59,7 +61,9 @@ class MainActivity : AppCompatActivity() {
                             }
                         } else {
                             // if the API call is a failure then these operations are executed
-                            error.text = getString(R.string.login_fail)
+                            val errorString = response.errorBody()?.string()
+                            val errorData = Gson().fromJson(errorString, Error::class.java)
+                            error.text = errorData.error
                             error.visibility = View.VISIBLE
                         }
                         progress.visibility = View.GONE
