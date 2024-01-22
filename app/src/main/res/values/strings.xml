@@ -12,5 +12,5 @@
     <string name="example_first_name">John</string>
     <string name="example_last_name">Doe</string>
     <string name="name">Name: </string>
-    <string name="last_page">Last page</string>
+    <string name="prev_page">Prev page</string>
 </resources>

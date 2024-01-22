@@ -9,3 +9,4 @@
 - test: unit test and error handling
 - Add last page button and make creation of RetrofitClient reusable
 - Use MVVM to separate View and ViewModel of login page
+- Use MVVM to separate View and ViewModel of staff list page
