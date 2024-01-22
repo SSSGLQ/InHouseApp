@@ -14,22 +14,14 @@ import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-
 
 class MainActivity : AppCompatActivity() {
-    val TAG = "MainActivity"
     private lateinit var loginButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val retrofitBuilder = Retrofit.Builder()
-            .baseUrl("https://reqres.in/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiInterface::class.java)
+        val retrofitBuilder = RetrofitClient.getInstance().create(ApiInterface::class.java)
 
         val progress = findViewById<ProgressBar>(R.id.progressBar)
         val email = findViewById<EditText>(R.id.editTextEmail)
@@ -109,5 +101,9 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("TOKEN", token)
         startActivity(intent)
         finish()
+    }
+
+    companion object {
+        const val TAG = "MainActivity"
     }
 }

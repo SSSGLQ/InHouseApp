@@ -12,26 +12,19 @@ import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class StaffListActivity : AppCompatActivity() {
 
     lateinit var staffRecyclerView: RecyclerView
     lateinit var staffAdapter: StaffAdapter
-    lateinit var retrofitBuilder: ApiInterface
-    var page = 1
-    val TAG = "StaffListActivity"
+    private lateinit var retrofitBuilder: ApiInterface
+    private var page = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_staff_list)
 
         staffRecyclerView = findViewById(R.id.recyclerView)
-        retrofitBuilder = Retrofit.Builder()
-            .baseUrl("https://reqres.in/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiInterface::class.java)
+        retrofitBuilder = RetrofitClient.getInstance().create(ApiInterface::class.java)
 
         getStaffData()
 
@@ -52,6 +45,12 @@ class StaffListActivity : AppCompatActivity() {
             ++page
             getStaffData()
         }
+        val lastPage = findViewById<Button>(R.id.lastPageBtn)
+        lastPage.setOnClickListener {
+            --page
+            getStaffData()
+        }
+
     }
 
     private fun getStaffData() {
@@ -68,10 +67,16 @@ class StaffListActivity : AppCompatActivity() {
                     val page = response.body()?.page
                     val totalPages = response.body()?.total_pages
                     val loadMore = findViewById<Button>(R.id.loadMoreBtn)
+                    val lastPage = findViewById<Button>(R.id.lastPageBtn)
                     if (page != totalPages) {
                         loadMore.visibility = View.VISIBLE
                     } else {
                         loadMore.visibility = View.GONE
+                    }
+                    if (page != 1) {
+                        lastPage.visibility = View.VISIBLE
+                    } else {
+                        lastPage.visibility = View.GONE
                     }
                 } else {
                     Log.d(TAG, "onFail: " + response.body())
@@ -83,5 +88,9 @@ class StaffListActivity : AppCompatActivity() {
                 Log.d(TAG, "onFailure: " + t.message)
             }
         })
+    }
+
+    companion object {
+        const val TAG = "StaffListActivity"
     }
 }

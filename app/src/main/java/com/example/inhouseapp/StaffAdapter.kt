@@ -32,8 +32,8 @@ class StaffAdapter(val context: Activity, val dataList: List<Data>):
         // populate the data into the view
         val currentData = dataList[position]
 
-//        Picasso.get().load(currentData.avatar).into(holder.avatar)
-        DownloadImageTask(holder.avatar).execute(currentData.avatar)
+        Picasso.get().load(currentData.avatar).into(holder.avatar)
+//        DownloadImageTask(holder.avatar).execute(currentData.avatar)
         holder.email.text = currentData.email
         holder.firstName.text = currentData.first_name
         holder.lastName.text = currentData.last_name
